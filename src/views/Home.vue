@@ -91,7 +91,7 @@
         'encontrarPokemonPorInicial'
       ]),
     },
-    async beforeMount(){
+    created(){
       this.obtenerPokemon();
     },
     components: {

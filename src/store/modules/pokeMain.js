@@ -50,7 +50,6 @@ export default {
             let pokeLista = getters.obtenerBusquedaPokemon;
 
             if(pokeLista.length === 0){
-                console.log("PETICIÓN!");
                 const resp = await pokemonAPI.obtenerTodosPokemon();
                 pokeLista = resp.data.results;
                 commit('llenarBusquedaPokemon', pokeLista);
@@ -75,24 +74,25 @@ export default {
         },
         async encontrarPokemonPorInicial({ commit, dispatch, getters }, letra = null){
             commit('cambiarCargarEstado', true);
-
             let pokeLista = getters.obtenerBusquedaPokemon;
-
             if(pokeLista.length === 0){
+                console.log("PETITION");
                 const resp = await pokemonAPI.obtenerTodosPokemon();
                 pokeLista = resp.data.results;
                 commit('llenarBusquedaPokemon', pokeLista);
             }
-            
             if(letra.length === 0){
                 dispatch('obtenerPokemon');
                 return;
             }
+            console.log('OBTENIENDO POR INICIAL');
             if(pokeLista){
                 const resultado = pokeLista.filter((e) => e.name.toUpperCase().startsWith(letra.toUpperCase()));
                 let pokemonList = await pokemonAPI.obtenerImagenPokemon(resultado);
+                console.log("TERMINO!");
                 commit('llenarPokemonListState', pokemonList);
                 commit('cambiarCargarEstado', false);
+                console.log('Actualizado!!')
                 return;
             }
             commit('llenarPokemonListState', []);
