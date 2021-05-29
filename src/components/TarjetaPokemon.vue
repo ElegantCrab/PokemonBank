@@ -4,9 +4,30 @@
        <v-card 
           elevation="3"
           align="center"
-          class="v-card"
+          class="v-card mt-8"
           @click.stop="mostrarDetalles=true"
         >
+          <v-row 
+            justify="end"
+            class="pr-6"
+          >
+            <v-btn
+              id="remover-fondo-btn"
+              elevation="0"
+              @click.stop="esNuevoFavorito ? agregarFavoritos(pokemon.id) : removerFavoritos(pokemon.id)"
+            >
+              <v-icon
+                  big
+                  absolute
+                  top
+                  center
+                  fab
+                  :color="obtenerColorFavorito(esNuevoFavorito)"
+                >
+                  star_outline
+                </v-icon>
+              </v-btn>
+          </v-row>
         <div class="fluid fill-height">
           <v-img
             :src="pokemon.imagenFondo"
@@ -53,21 +74,12 @@
             </v-card-subtitle>
           </v-col>
         </v-row>
-        <!-- <v-card-title class="mt-2">
-          <v-row>
-            <v-spacer></v-spacer>
-            HP {{pokemon.hpBase}}
-            <v-spacer>
-            </v-spacer>
-            ATK {{pokemon.ataqueBase}}
-            <v-spacer></v-spacer>
-          </v-row>
-        </v-card-title> -->
         </v-card>
     </div> 
 </template>
 
 <script>
+import { mapState, mapActions } from 'vuex'
 import DetallesPokemon from '@/components/DetallesPokemon.vue';
 
 export default {
@@ -100,8 +112,34 @@ export default {
           },
         }
     },
+    computed: {
+      ...mapState('favoritos', 
+      [
+        'idFavoritos',
+        'favoritos'
+      ]),
+      esNuevoFavorito(){
+        const favoritoExistente = this.idFavoritos.filter((id) => id == this.pokemon.id);
+        console.log(favoritoExistente);
+        if(favoritoExistente.length === 0){
+          return true;
+        }
+        return false;
+      },
+    },
     methods: {
-
+      ...mapActions('favoritos',
+      [
+        'agregarFavoritos',
+        'removerFavoritos',
+        'limpiarFavoritos'
+      ]),
+      obtenerColorFavorito(esNuevoFavorito){
+        if(esNuevoFavorito){
+          return 'white';
+        }
+        return 'yellow';
+      }
     },
     components: {
       DetallesPokemon
@@ -133,5 +171,21 @@ export default {
   }
   .ataque-hp {
     margin-top: -2.8rem;
+  }
+  #remover-fondo-btn::before {
+    background-color: transparent !important;
+  }
+  #remover-fondo-btn {
+    background-color: transparent !important;
+    z-index: 3;
+    position: relative;
+    color: black;
+    line-height: 0px;
+    position: absolute;
+    margin-top: 5px;
+    margin-left: 0px;
+    margin-right:0px;
+    max-width: 5px !important;
+    min-width: 5px !important;
   }
 </style>

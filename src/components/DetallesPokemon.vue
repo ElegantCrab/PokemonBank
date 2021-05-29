@@ -63,7 +63,13 @@
             <v-row v-if="!cargandoEvoluciones">
                 <v-col style="text-transform: capitalize" v-for="(evolucion, index) of evoluciones" :key="index">
                     <div v-if="evolucion">
-                        {{evolucion.name.replace(/-/g, ' ')}}
+                        <v-img
+                            :src="evolucion.imagen"
+                            max-width="50"
+                        >
+
+                        </v-img>
+                        {{evolucion.nombre.replace(/-/g, ' ')}}
                     </div>
                     <div v-else>
                         NO DISPONIBLE

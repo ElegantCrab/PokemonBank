@@ -2,10 +2,10 @@
   <v-app>
     <link href="//db.onlinewebfonts.com/c/a222402127a0453c817a6cf4c3d9810b?family=Pokemon" rel="stylesheet" type="text/css"/>
     <v-app-bar
-    
       app
       color="primary"
       dark
+      v-if="logged"
     >
       <div class="d-flex align-center">
         <v-img
@@ -48,12 +48,27 @@
 
 <script>
 import Favoritos from '@/components/Favoritos.vue';
+import { mapActions } from 'vuex';
 
 export default {
   name: 'App',
   data: () => ({  }),
   components: {
     Favoritos,
+  },
+  computed: {
+     logged(){
+         return true;
+     }
+  },
+  methods: {
+    ...mapActions('favoritos', 
+    [
+      'inicializarFavoritos'
+    ]),
+  },
+  beforeMount(){
+    this.inicializarFavoritos();
   }
 };
 </script>
