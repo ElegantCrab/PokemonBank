@@ -40,7 +40,7 @@
                 label="Nombre de Usuario"
                 prepend-icon="person"
                 required
-                v-on:keyup.enter="ingresar"
+                v-on:keyup.enter="ingresar()"
               ></v-text-field>
               <v-text-field
                 v-model="password"
@@ -50,14 +50,14 @@
                 :type="show1 ? 'text' : 'password'"
                 label="Contraseña"
                 required
-                v-on:keyup.enter="ingresar"
+                v-on:keyup.enter="ingresar()"
                 @click:append="show1 = !show1"
               ></v-text-field>
               <v-flex class="red--text" v-if="error">{{error}}</v-flex>
             </v-card-text>
             <v-card-actions class="px-3 pb-3">
               <v-flex text-xs-right>
-                <v-btn @click="ingresar" color="primary" style="color: black; font-weight: 500">
+                <v-btn @click="ingresar()" color="primary" style="color: black; font-weight: 500">
                     Ingresar
                 </v-btn>
               </v-flex>
@@ -72,10 +72,28 @@
 <script>
 export default {
  name: "Login",
+ data(){
+   return {
+     nombreUsuario: "",
+     password: "",
+     show1: false,
+     error: ""
+   }
+ },
  computed: {
      logged(){
          return false;
      }
+ },
+ methods: {
+   ingresar(){
+     if(this.nombreUsuario.length === 0 || this.password.length === 0){
+       this.error = "Favor de ingresar los datos solicitados"
+       return;
+     }
+     this.$router.push("Home");
+     console.log("PRESSED");
+   }
  }
 }
 </script>

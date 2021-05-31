@@ -30,10 +30,9 @@
       <v-spacer></v-spacer>
       <Favoritos class="mr-2" />
       <v-btn
-        href=""
-        target="_blank"
         text
         color="secondary"
+        @click="logout()"
       >
         <span class="mr-2"></span>
         <v-icon>logout</v-icon>
@@ -58,7 +57,10 @@ export default {
   },
   computed: {
      logged(){
-         return true;
+      if(this.$route.name === "Login"){
+        return false;
+      }
+      return true;
      }
   },
   methods: {
@@ -66,6 +68,9 @@ export default {
     [
       'inicializarFavoritos'
     ]),
+    logout(){
+      this.$router.push("Login");
+    }
   },
   beforeMount(){
     this.inicializarFavoritos();

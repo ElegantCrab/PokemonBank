@@ -105,7 +105,7 @@
                             </v-img>
                             <v-row justify="center" class="mt-1">
                                 <p class="mr-2">
-                                    {{index+1}}.-
+                                    <!-- {{index+1}}.- -->
                                 </p>
                                 <p class="text-sm-h5 text-md-h4">
                                     {{pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1)}}
